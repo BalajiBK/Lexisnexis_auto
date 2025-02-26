@@ -1,4 +1,4 @@
-# Project Name
+# LexisNexis
 
 ## Overview
 This project is built using Java and utilizes several plugins and tools for testing and logging. The primary tools used in this project include:
