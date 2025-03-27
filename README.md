@@ -35,11 +35,21 @@ You can run the tests in the following ways:
    Open your terminal and navigate to the project directory. Then run:
    ```bash
    mvn clean test
-2. **Using IDE: Right-click on the runner class and select "Run" to execute the tests.
+   ```
+2. **Using IDE**: Right-click on the runner class and select "Run" to execute the tests.
 
 ## Reports
-## Extent Reports
-Extent Reports are generated to provide a detailed overview of the test results. You can find the reports in the **Reports directory after running the tests.
+### Extent Reports
+Extent Reports are generated in the `Reports` directory with the following structure:
+- Each test run creates a new timestamped directory: `Reports/Report_DD_MMM_YY_HH_mm_ss/`
+- The report file is named: `LexisNexisAutomationOutput.html`
+- Example: `Reports/Report_27_MAR_24_15_45_30/LexisNexisAutomationOutput.html`
 
-## TestNG Reports
-TestNG will generate its own report in the test-output directory.
+The reports include:
+- Test execution summary
+- Step-by-step test details
+- Test duration
+- Pass/Fail status
+
+### TestNG Reports
+TestNG generates its own reports in the `test-output` directory after test execution.
