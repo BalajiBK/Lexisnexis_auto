@@ -13,13 +13,11 @@
         <maven.compiler.target>23</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <cucumber.version>7.20.1</cucumber.version>
-        <selenium.version>4.26.0</selenium.version>
+        <selenium.version>4.29.0</selenium.version>
         <testng.version>7.10.2</testng.version>
         <log4j.version>2.24.1</log4j.version>
         <maven.compiler.plugin.version>3.12.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.2.3</maven.surefire.plugin.version>
-        <maven.compiler.source.version>17</maven.compiler.source.version>
-        <maven.compiler.target.version>17</maven.compiler.target.version>
     </properties>
     <dependencies>
 
