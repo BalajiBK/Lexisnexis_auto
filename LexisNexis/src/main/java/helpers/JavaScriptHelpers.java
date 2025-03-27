@@ -4,13 +4,12 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class JavscriptHelpers {
+public class JavaScriptHelpers {
 
-    public void scrollToElement(WebDriver driver, WebElement wb_elm) {
+    public void scrollToElement(WebDriver driver, WebElement element) {
         try {
-
             JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].scrollIntoView(true);", wb_elm);
+            js.executeScript("arguments[0].scrollIntoView(true);", element);
 
             // Wait a moment to see the scroll effect
             Thread.sleep(1000);

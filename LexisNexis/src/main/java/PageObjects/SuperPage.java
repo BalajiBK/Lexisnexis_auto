@@ -1,15 +1,14 @@
-package PageObjects;
+package pageobjects;
 
 import helpers.ElementHelpers;
-import helpers.JavscriptHelpers;
-import helpers.waithelpers;
+import helpers.JavaScriptHelpers;
+import helpers.WaitHelpers;
 import org.openqa.selenium.WebDriver;
 
 public class SuperPage {
-    WebDriver driver;
-    waithelpers _waithelpers = new waithelpers();
-    ElementHelpers elementHelpers = new ElementHelpers();
-    JavscriptHelpers javascriptHelpers = new JavscriptHelpers();
-
+    protected WebDriver driver;
+    protected final WaitHelpers waitHelpers = new WaitHelpers();
+    protected final ElementHelpers elementHelpers = new ElementHelpers();
+    protected final JavaScriptHelpers javaScriptHelpers = new JavaScriptHelpers();
 
 }

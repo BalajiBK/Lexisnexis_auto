@@ -6,31 +6,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class ElementHelpers {
-
-    public waithelpers wait;
+    private final WaitHelpers wait;
 
     public ElementHelpers() {
-        this.wait = new waithelpers();
+        this.wait = new WaitHelpers();
     }
 
-
-    public void waitforelement_click(WebDriver driver, WebElement wb_elm,String elementname,Logger logger)
-    {
-        this.wait.waitforelement(driver,wb_elm);
-        wb_elm.click();
-        logger.info("Clicked on "+elementname);
+    public void waitForElementClick(WebDriver driver, WebElement element, String elementName, Logger logger) {
+        this.wait.waitForElement(driver, element);
+        element.click();
+        logger.info("Clicked on " + elementName);
     }
 
-    public void waitforelement_sendkeys(WebDriver driver, WebElement wb_elm,String elementname,String value,Logger logger)
-    {
-        this.wait.waitforelement(driver,wb_elm);
-        wb_elm.sendKeys(value);
-        logger.info("Entered value "+value+" in field "+elementname);
-    }
-
-
-    public void waitforelement(WebDriver driver, WebElement txtThankyou, String thankYouMessage, Logger mylogger) {
-        this.wait.waitforelement(driver, txtThankyou);
-        mylogger.info("Waited for element "+thankYouMessage);
+    public void waitForElementSendKeys(WebDriver driver, WebElement element, String elementName, String value, Logger logger) {
+        this.wait.waitForElement(driver, element);
+        element.sendKeys(value);
+        logger.info("Entered value " + value + " in field " + elementName);
     }
 }

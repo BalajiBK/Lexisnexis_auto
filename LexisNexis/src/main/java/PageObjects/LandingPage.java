@@ -1,4 +1,4 @@
-package PageObjects;
+package pageobjects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,36 +8,34 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-public class LandingPage extends SuperPage{
-
-    private static final Logger mylogger = LogManager.getLogger(LandingPage.class);
+public class LandingPage extends SuperPage {
+    private static final Logger logger = LogManager.getLogger(LandingPage.class);
+    private static final int MAX_RETRY_ATTEMPTS = 3;
+    private static final int RETRY_DELAY_MS = 1000;
 
     public LandingPage(WebDriver driver) {
-
         PageFactory.initElements(driver, this);
-        this.driver=driver;
-        mylogger.info("Landing Page Loaded");
-        this.accept_cookies();
+        this.driver = driver;
+        logger.info("Landing Page Loaded");
+        this.acceptCookies();
     }
 
     @FindBy(how = How.ID, using = "onetrust-accept-btn-handler")
-    private WebElement accept_cookies;
+    private WebElement acceptCookiesButton;
 
     @FindBy(how = How.XPATH, using = "//a[@href='#'][normalize-space()='About Us']")
-    private WebElement about_us_lnk;
+    private WebElement aboutUsLink;
 
     @FindBy(how = How.XPATH, using = "//div[@class='score-style-box clearfix']//a[@class='score-button btn-clickable-area'][normalize-space()='Learn More']")
-    private WebElement careers_lnk;
+    private WebElement careersLink;
 
-
-    public void accept_cookies() {
-        elementHelpers.waitforelement_click(this.driver,accept_cookies,"Accept Cookies",mylogger);
+    public void acceptCookies() {
+        elementHelpers.waitForElementClick(this.driver, acceptCookiesButton, "Accept Cookies Button", logger);
     }
 
-    public CareersPage navigate_to_about_careers(){
-
-        Click_OnAboutUsLink();
-        elementHelpers.waitforelement_click(this.driver,careers_lnk,"Careers Link",mylogger);
+    public CareersPage navigateToAboutCareers() {
+        clickOnAboutUsLink();
+        elementHelpers.waitForElementClick(this.driver, careersLink, "Careers Link", logger);
 
         // Store the current window handle (parent tab)
         String parentWindow = this.driver.getWindowHandle();
@@ -46,41 +44,32 @@ public class LandingPage extends SuperPage{
         for (String windowHandle : this.driver.getWindowHandles()) {
             if (!windowHandle.equals(parentWindow)) {
                 this.driver.switchTo().window(windowHandle);
-                mylogger.info("Switched to Careers Page");
-                System.out.println(this.driver.getTitle());// Switch to the new tab
-                break; // Exit the loop after switching
+                logger.info("Switched to Careers Page");
+                System.out.println(this.driver.getTitle());
+                break;
             }
         }
 
         return new CareersPage(this.driver);
     }
 
-    private void Click_OnAboutUsLink() {
-        boolean clicked = false;
-        int maxAttempts = 5;
-        long maxTimeMillis = 20000;
-        long startTime = System.currentTimeMillis();
-        int attempts = 0;
-        while (!clicked && attempts < maxAttempts) {
-            long elapsedTime = System.currentTimeMillis() - startTime;
-            if (elapsedTime > maxTimeMillis) {
-                System.out.println("Exceeded maximum time of " + (maxTimeMillis / 1000.0) + " seconds.");
-                break;
-            }
-
+    private void clickOnAboutUsLink() {
+        for (int attempt = 1; attempt <= MAX_RETRY_ATTEMPTS; attempt++) {
             try {
-                elementHelpers.waitforelement_click(driver, about_us_lnk, "About Us Link", mylogger);
-                clicked = true;
+                elementHelpers.waitForElementClick(driver, aboutUsLink, "About Us Link", logger);
+                return;
             } catch (Exception e) {
-                attempts++;
-                System.out.println("Attempt " + attempts + " failed: Element not clickable yet, retrying...");
+                if (attempt == MAX_RETRY_ATTEMPTS) {
+                    throw new RuntimeException("Failed to click About Us link after " + MAX_RETRY_ATTEMPTS + " attempts", e);
+                }
+                logger.warn("Attempt " + attempt + " failed to click About Us link, retrying...");
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(RETRY_DELAY_MS);
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
             }
         }
     }
-    }
+}
 
